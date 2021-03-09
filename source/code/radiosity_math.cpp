@@ -1,4 +1,0 @@
-/*
-// NOTE(Alex): 
-matrix operations
-*/
