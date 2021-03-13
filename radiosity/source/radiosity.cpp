@@ -4,8 +4,7 @@ using namespace std;
 
 
 /* 
- YOUAREHERE: 24.2 Algorithms and Lifting  - function templates
- YOUAREHERE: 21.2.1 Implementation Inheritance - virtual
+YOUAREHERE: 17.4.1 Member Initialization
 */
 
 
@@ -183,7 +182,6 @@ int main()
 #endif
 }
 #endif
- */
 
 
 int hash(const RadString& s)
@@ -235,3 +233,10 @@ int main()
     //f("Madden's");
     //f("Christopher's"_s);
 }
+ */
+
+int main()
+{
+    
+}
+
