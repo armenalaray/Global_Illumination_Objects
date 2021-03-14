@@ -93,7 +93,6 @@ class IvaI_slider:public IvaI_box, protected BBwidget{
     private:
     // ... data needed for slider ...
 };
-#endif
 
 class Vector{
     public:
@@ -110,6 +109,7 @@ class Vector{
     int sz;      // sz is non-negative
 };
 
+#endif
 
 
 

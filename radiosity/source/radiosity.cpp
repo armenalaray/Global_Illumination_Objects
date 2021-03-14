@@ -1,10 +1,13 @@
 #include <iostream>
 using namespace std;
 #include "radiosity_string.h"
-
+#include "radiosity_vector_base.h"
+#include "radiosity_matrix.h"
 
 /* 
-YOUAREHERE: 17.4.1 Member Initialization
+Open both:
+YOUAREHERE: 13.6.4.1 reserve()
+YOUAREHERE: 28.2 Type Functions
 */
 
 
@@ -237,6 +240,6 @@ int main()
 
 int main()
 {
-    
+    //vector<float> a{1,2,3,4};
 }
 
