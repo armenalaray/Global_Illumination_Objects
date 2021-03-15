@@ -19,7 +19,8 @@ Here is a declaration of vector
 This style of consructor relies on the fundamental language rule that when an exception is thrown from a constructor, subobjects(including bases)
 that have already been completely constructed will be properly destruyed.
 the uninitialized_fill()  algorithm and its cousins(13.6.1) provide the uquivalent guarantee for partially constructed sequences.
- */
+ Avoid throwing move operators as you avoid throwing destructors (13.2, 17.2.2)
+*/
 
 template<typename T, typename A=allocator<T>>
 class vector{
@@ -43,6 +44,7 @@ class vector{
     void destroy_elements();
 };
 
-
+template<typename T> void sort(vector<T>&);        //declaration
+template<typename In> void destroy(In b, In e);
 
 #endif //RADIOSITY_MATRIX_H

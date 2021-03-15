@@ -3,163 +3,6 @@
 #define OPTIMIZED_ASIGMNT_OPERATOR
 #define RESERVE_NOT_INITIALIZE
 
-#if 0
-template<typename T>
-Matrix::Matrix(const Matrix& m) :
-dim{m.dim},
-elem{static_cast<T*>(new char[sizeof(T)*m.size()])}
-{
-    uninitialized_copy(m.elem,m.elem+m.size(),elem);
-}
-#endif
-
-#if 0
-template<typename T, typename A>
-vector_base<T,A>::vector_base(vector_base&& a):
-alloc{a.alloc},
-elem{a.elem},
-space{a.space},
-last{a.last}
-{
-    a.elem = a.space = a.last = nullptr; //no longer owns any memory
-}
-
-
-/* 
- el alocador no se copia, because it belongs to vector!!! is not a member!!!
-el alocador no se copia, pero se puede mover!!!
-*/
-
-template<typename T, typename A>
-vector_base<T,A>& vector_base<T,A>::operator=(vector_base&& a)
-{
-    // NOTE(Alex): There are no objects of type T to destroy: vector_base deals with memory and leaves convers about objects of type T to vector.
-    swap(*this,a);
-    return *this;
-}
-
-template<typename T, typename A>
-void vector<T,A>::destroy_elements()
-{
-    for(T* p=vb.elem; p!=vb.space;++p)
-    {
-        p->~T();                          //destroy element;
-    }
-    vb.space=vb.elem;
-}
-
-template<typename T,typename A>
-vector<T,A>::vector(size_type n, const T& val, const A& a):
-vb{a,n}
-{
-    uninitialized_fill(vb.elem,vb.elem+n,val); //make n copies of val
-}
-
-template<typename T, typename A>
-vector<T,A>::vector(const vector<T,A>& a):
-// NOTE(Alex): no vas a copiar el alocador 
-//vas a iniciar el alocador con el alocador y el size
-//inicializas el vector_base no lo copias!!! ya que no puedes copiarlo!!!
-
-/* 
- Fundamental language rule that when an exception is thrown from a 
-constructor, subobjects(including bases) that have already been completely constructed will be
-properly destroyed.
-
-The unitialized fill() algorithm and its cousins (13.6.1) provide
-the equivalent quarantee for partially constructed sequences.
-*/
-
-vb{a.vb.alloc,a.size()}
-{
-    uninitialized_copy(a.begin(),a.end(),vb.elem);
-}
-
-#endif
-
-#if 0
-template<typename For, typename T>
-void uninitialized_fill(For bed,For end, const T& x)
-{
-    For p;
-    try{
-        for(p=beg;p!=end;++p)
-            ::new(static_cast<void*>(&*p))T(x); //construct copy of x in *p
-    }
-    catch(...){
-        for(For q = beg;q!=p;++q)
-            (&*q)->~T();                            //destroy element
-        throw;
-    }
-}
-#endif
-
-/* 
-There are two potential sources of exceptions here:
-
-//allocate may throw an exception if no memory is available.
-//T´s copy constructor may throw an exception if it can't copy val.
-
- */
-
-#if 0
-template<typename T, typename A>
-vector<T,A>::vector(size_type n, const T& val, const A& a): //warning naive implementation
-alloc{a}
-{
-    elem = alloc.allocate(n);       //get memory for elements
-    space = last = elem + n;
-    for(T*p=elem;p!=last;++p)
-        a.construct(p,val);         //construct copy of val in *p
-}
-#endif
-
-#if 0
-template<typename T, typename A>
-vector<T,A>::vector<size_type n, const T& val, const A& a): //elaborate implementaton
-alloc{a} //copy the allocator
-{
-    
-    elem=alloc.allocate(n);         //get memory for elements
-    
-    // TODO(Alex): handle the empty vector case if(n)
-    
-    T*p; //outside try{} because we need it in catch{}
-    try{
-        auto end = elem+n;
-        for(p=elem; p!=end;++p)
-            alloc.construct(p,val);  //construct copy of element
-        last=space=p;
-    }
-    catch(...){
-        for(auto q=element; q!=p++q)
-            alloc.destroy(q);        //destroy constructed elements
-        alloc.deallocate(elem,n);    //free memory
-        throw;                       //rethrow
-    }
-}
-#endif
-
-#if 0
-template<typename T, typename A>
-vector<T,A>::vector(size_type n, const T& val, const A& a): //elaborate implementaton
-alloc{a} //copy the allocator
-{
-    elem=alloc.allocate(n);         //get memory for elements
-    
-    // TODO(Alex): handle the empty vector case if(n)
-    
-    try{
-        uninitialized_fill(elem,elem+n,val); //copy elements
-        space=last=elem+n;
-    }
-    catch(...){
-        alloc.deallocate(elem,n);    //free memory
-        throw;                       //rethrow
-    }
-}
-#endif
-
 
 template<typename T, typename A>
 void vector<T,A>::destroy_elements()
@@ -278,7 +121,7 @@ vector<T,A>& vector<T,A>::operator=(vector&& a)
 template<typename T, typename A>
 void vector<T,A>::reserve(size_type newalloc){
     if(newalloc<=capacity())return;
-    vector<T,A> b(newalloc);
+    vector<T,A> b{newalloc}; //OK: explicit
     copy(vb.elem,vb.elem+size(),b.begin());
     vb.space=size(); // NOTE(Alex): this is for making destructor in v destroy all the old elements in this
     swap(vb,b);
@@ -294,10 +137,13 @@ template<typename T, typename A>
 void vector<T,A>::reserve(size_type newalloc){
     if(newalloc<=capacity())return;
     vector_base<T,A> b{vb.alloc,size(),newalloc-size()};
-    uninitialized_move(vb.elem, vb.elem+size(),b,elem);
+    uninitialized_move(vb.elem, vb.elem+size(),b.elem);
     swap(vb,b);
 }
 
+/* 
+A move operation should not throw
+ */
 template<typename In, typename Out>
 Out uninitialized_move(In b, In e, Out oo)
 {
@@ -311,3 +157,91 @@ Out uninitialized_move(In b, In e, Out oo)
 }
 
 #endif
+
+template<typename T, typename A>
+void vector<T,A>::resize(size_type newsize, const T& val)
+{
+    reserve(newsize);
+    if(size()<newsize)
+        uninitialized_fill(vb.elem+size(),vb.elem+newsize,val);
+    else
+        destroy(vb.elem+newsize, vb.elem+size());
+    vb.space = vb.elem+newsize;
+}
+
+template<typename In>
+void destroy(In b, In e)
+{
+    for(;b!=e;++b) //destroy [b:e)
+        b->~Value_type<In>();
+}
+
+
+template<class T, typename A>
+void vector<T,A>::push_back(const T& vañ)
+{
+    if(capacity()==size())
+        reserve(size()?2*size():8); //grow or start with 8
+    vb.alloc.construct(&vb.elem[size()],val);
+    ++vb.space;
+}
+
+/*
+This templatized version is cleaner and shorter because it can rely on more information about the type of the elements it sorts.
+Typically, it is also faster because it doesn´t rely on a pointer to function for the comparison. this
+implies that no indirect function calls are needed and that inlining a simple < is easy.
+*/
+
+template<typename T>
+void sort(vector<T>& v)
+{
+    const size_t n=v.size();
+    for(int gap=n/2;0<gap;gap/=2){
+        for(int i=gap;i<n;i++){
+            for(int j=i-gap;0<=j;j-=gap){
+                // NOTE(Alex): operator compare < for elements in vector
+                if(v[j+gap]<v[j]){ //swap v[j] and v[j+gap]
+                    // NOTE(Alex): operator asignment for elements in vector
+                    T temp=v[j];
+                    v[j] = v[j+gap];
+                    v[j+gap] = temp;
+                }
+            }
+        }
+    }
+}
+//std:less<T> - Unless specialized, invokes operator< on type T.
+template<typename T, typename Compare = std:less<T>>
+void sort(vector<T>& v)
+{
+    // NOTE(Alex): ok entonces se hacen objetos asi genericos. compare
+    Compare cmp;   //Make a default compare object.
+    const size_t n = v.size();
+    for(int gap=n/2;0<gap;gap/=2){
+        for(int i=gap;i<n;i++){
+            for(int j=i-gap;0<=j;j-=gap){
+                if(cmp(v[j+gap],v[j]))
+                    swap(v[j],v[j+gap]);
+            }
+        }
+    }
+}
+
+// we can  now sort using the default comparison operationn (<) or supply our own:
+struct No_case{
+    bool operator()(const string& a, const string& b)const; //compare case insensitive
+};
+
+
+/* 
+Asi es como se sobrecarga un operador de comparación!!!
+
+ */
+void matrix_f(vector<int>& vi, vector<string>& vs)
+{
+    sort(vi);                         //sort(vector<int>&)
+    sort<int,std::greater<int>>(vi);  //sort(vector<int>&) using greater
+    
+    sort(vs);                         //sort(vector<string>&)
+    sort<string,No_case>(vs);         //sort(vector<string>&) using No_case
+}
