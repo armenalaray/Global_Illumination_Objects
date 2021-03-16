@@ -1,12 +1,13 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 #include "radiosity_string.h"
-#include "radiosity_vector_base.h"
-#include "radiosity_matrix.h"
+//#include "radiosity_vector_base.h"
+//#include "radiosity_matrix.h"
 
 /* 
 Open both:
-YOUAREHERE: 16.2.9.3 mutable
+YOUAREHERE: 23.4.6.3 Use of Nesting
 */
 
 
@@ -239,6 +240,7 @@ int main()
 
 int main()
 {
-    //vector<float> a{1,2,3,4};
+    vector<float> a{1,2,3,4};
+    
 }
 

@@ -1,5 +1,6 @@
 #include "radiosity_matrix.h"
 
+#if 0
 #define OPTIMIZED_ASIGMNT_OPERATOR
 #define RESERVE_NOT_INITIALIZE
 
@@ -245,3 +246,4 @@ void matrix_f(vector<int>& vi, vector<string>& vs)
     sort(vs);                         //sort(vector<string>&)
     sort<string,No_case>(vs);         //sort(vector<string>&) using No_case
 }
+#endif

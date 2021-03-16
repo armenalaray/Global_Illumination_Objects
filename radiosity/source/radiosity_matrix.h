@@ -3,6 +3,7 @@
 #ifndef RADIOSITY_MATRIX_H
 #define RADIOSITY_MATRIX_H
 
+#if 0
 #include <array>
 #include "radiosity_vector_base.h"
 /* 
@@ -46,5 +47,6 @@ class vector{
 
 template<typename T> void sort(vector<T>&);        //declaration
 template<typename In> void destroy(In b, In e);
+#endif
 
 #endif //RADIOSITY_MATRIX_H
