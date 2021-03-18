@@ -13,14 +13,18 @@ el color por medio de los uv
 
 #include "displayable.h"
 #include "quad.h"
+#include "ray.h"
 
 class DisplayableSpace : public Displayable
 {
     public:
+    DisplayableSpace():
+    quads{}
+    {}
     // NOTE(Alex): Displayable override
     Color<int> request_color(Ray r, float tMin, float tMax) override;
     private:
-    //vector<shared_ptr<Quad>> quads;
+    std::vector<std::shared_ptr<Quad>> quads;
 };
 
 

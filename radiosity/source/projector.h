@@ -9,10 +9,13 @@
 
 class Projector{
     public:
-    virtual void Render() = 0;
+    Projector():
+    space{}
+    {}
+    
+    virtual void render() = 0;
     
     protected:
-    Canvas canvas;
     DisplayableSpace space;
 };
 

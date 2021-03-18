@@ -9,7 +9,7 @@
 class OrthoProjector : public Projector 
 {
     public:
-    void Render() override;
+    void render() override;
     private:
 };
 

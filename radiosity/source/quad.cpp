@@ -1,4 +1,4 @@
-#include "face.h"
+#include "quad.h"
 
 // NOTE(Alex): XY (0,0) (5,5) Z = 0
 Color<int> Quad_XY_Z0::get_color(float u, float v)

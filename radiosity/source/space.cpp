@@ -1,6 +1,6 @@
 #include "space.h"
 
-Color DisplayableSpace::request_color(ray & r, float tMin, float tMax)
+Color<int> DisplayableSpace::request_color(Ray r, float tMin, float tMax)
 {
     HitRec rec{};
     int Index{-1};
