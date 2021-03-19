@@ -4,7 +4,9 @@ Radiosity Solver by Alejandro Armenta
  YOUAREHERE: 23.5.2.1 Reference Deduction 
 */
 
-#include"ortho_projector.h"
+#include "matrix.h"
+#include "ortho_projector.h"
+
 
 #if defined(_MSC_VER)
 #define _CRTDBG_MAP_ALLOC
@@ -20,6 +22,11 @@ int main()
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 	//_CrtSetBreakAlloc(147);	
 #endif
-    OrthoProjector o{};
-    o.render();
+    //OrthoProjector o{};
+    //o.render();
+    Matrix<double,2> m{
+        { 0, 1, 2, 3},
+        {10,11,12,13},
+        {20,21,22,23},
+    };
 }
