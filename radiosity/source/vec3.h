@@ -12,6 +12,9 @@ Los templates solo funcionan en tiempo de compilacion, por eso no puedes compila
 template<typename T>
 class Vec3
 {
+    /* 
+    // TODO(Alex): Add move constructors and destructors
+     */
     public:
 	Vec3(T e0, T e1, T e2):
     x{e0},y{e1},z{e2}{}
@@ -51,23 +54,27 @@ Vec3<T>& Vec3<T>::operator-=(const Vec3& v){
 }
 
 template<typename T>
-Vec3<T> operator+(Vec3<T>& v1, const Vec3<T>& v2){
-    return v1+=v2;
+Vec3<T> operator+(const Vec3<T>& v1, const Vec3<T>& v2){
+    Vec3<T> res{v1};
+    res+=v2;
+    return res;
 }
 
 template<typename T>
-Vec3<T> operator-(Vec3<T>& v1, const Vec3<T>& v2){
-    return v1-=v2;
+Vec3<T> operator-(const Vec3<T>& v1, const Vec3<T>& v2){
+    Vec3<T> res{v1};
+    res-=v2;
+    return res;
 }
 
 template<typename T>
-Vec3<T> operator*(const Vec3<T>& v, float f){
-    return {v.x * f, v.y*f, v.z*f};
+Vec3<T> operator*(const Vec3<T>& v, const float f){
+    return {v.x*f, v.y*f, v.z*f};
 }
 
 template<typename T>
-Vec3<T> operator*(float f, const Vec3<T>& v){
-    return v * f;
+Vec3<T> operator*(const float f, const Vec3<T>& v){
+    return v*f;
 }
 
 template<typename T>
