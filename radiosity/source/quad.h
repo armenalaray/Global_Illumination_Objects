@@ -28,7 +28,11 @@ class Quad : public hitable
     virtual Color<int> get_color(float u, float v);
     
     protected:
-    Vec3<float> c[4];
+    /* 
+        // NOTE(Alex): I save the color data as floating point, and whenever i Lerp i make the
+    transformation to integer as a last operation
+     */
+    Color<float> c[4];
 };
 
 class Quad_XY_Z0 : public Quad

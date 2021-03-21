@@ -12,17 +12,23 @@ el color por medio de los uv
 #include <memory>
 
 #include "displayable.h"
+#include "integrator.h"
+
 #include "quad.h"
 #include "ray.h"
 
-class DisplayableSpace : public Displayable
+class Space : public Displayable , public Integrator
 {
     public:
-    DisplayableSpace():
+    Space():
     quads{}
     {}
     // NOTE(Alex): Displayable override
     Color<int> request_color(Ray r, float tMin, float tMax) override;
+    
+    // NOTE(Alex): Integrator override
+    Element request_element(Ray r, float tMin, float tMax) override;
+    
     private:
     std::vector<std::shared_ptr<Quad>> quads;
 };

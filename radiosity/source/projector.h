@@ -7,16 +7,14 @@
 #include "canvas.h"
 #include "space.h"
 
+static Space space;
+
 class Projector{
     public:
-    Projector():
-    space{}
-    {}
-    
+    Projector()=default;
     virtual void render() = 0;
-    
     protected:
-    DisplayableSpace space;
+    void CreateSpace();
 };
 
 #endif //PROJECTOR_H

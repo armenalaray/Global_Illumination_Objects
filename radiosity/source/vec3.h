@@ -3,6 +3,7 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+#include <ostream>
 #include <cmath>
 
 /* 
@@ -12,15 +13,17 @@ Los templates solo funcionan en tiempo de compilacion, por eso no puedes compila
 template<typename T>
 class Vec3
 {
-    /* 
-    // TODO(Alex): Add move constructors and destructors
-     */
     public:
-	Vec3(T e0, T e1, T e2):
+	Vec3()=default;
+    Vec3(T e0, T e1, T e2):
     x{e0},y{e1},z{e2}{}
+    
     Vec3& operator+=(const Vec3&);
     Vec3& operator-=(const Vec3&);
+    Vec3& operator*=(const float);
     
+    T norm() const;
+    T squared_norm() const;
     private:
     union{
         struct{
@@ -36,6 +39,11 @@ class Vec3
     };
 };
 
+template<typename T>
+// TODO(Alex): Add concept
+std::ostream& operator<<(std::ostream& o, Vec3<T> v){
+    return o<<'{' << v.x << v.y << v.z << '}';
+}
 
 template<typename T>
 Vec3<T>& Vec3<T>::operator+=(const Vec3& v){
@@ -51,6 +59,31 @@ Vec3<T>& Vec3<T>::operator-=(const Vec3& v){
     y-=v.y;
     z-=v.z;
     return *this;
+}
+
+
+template<typename T>
+Vec3<T>& Vec3<T>::operator*=(const float f){
+    x*=f;
+    y*=f;
+    z*=f;
+    return *this;
+}
+
+template<typename T>
+T Vec3<T>::squared_norm()const{
+    return x*x+y*y+z*z;
+}
+
+template<typename T>
+T dot(const Vec3<T> v1, const Vec3<T> v2){
+    return v1.x*v2.x+v1.y*v2.y+v1.z*v2.z;
+}
+
+
+template<typename T>
+T Vec3<T>::norm()const{
+    return std::sqrt(squared_norm());
 }
 
 template<typename T>
@@ -76,6 +109,34 @@ template<typename T>
 Vec3<T> operator*(const float f, const Vec3<T>& v){
     return v*f;
 }
+
+template<typename T>
+Vec3<T> operator-(const Vec3<T> v){
+    return {-v.x,-v.y,-v.z};
+}
+
+template<typename T>
+Vec3<T> MakeUnitVector(const Vec3<T> v){
+    Vec3<T> res{};
+    if(v.norm() != 0)
+    {
+        res=v;
+        T k = T{1.0f} / v.norm();
+        res*=k;
+    }
+    return res;
+}
+
+template<typename T>
+Vec3<T> Cross(const Vec3<T> v1,const Vec3<T> v2){
+    return {
+        v1.y * v2.z - v1.z * v2.y, 
+        -(v1.x * v2.z - v1.z * v2.x),   
+        v1.x * v2.y - v1.y * v2.x
+    };
+}
+
+
 
 template<typename T>
 using Color = Vec3<T>;
