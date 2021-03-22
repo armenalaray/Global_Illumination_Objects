@@ -6,13 +6,15 @@
 #include "matrix.h"
 #include "hemi_cube.h"
 #include "element.h"
+#include "space.h"
+
+extern Space space;
 
 class Radiosity{
     public:
-    Radiosity()=default;
-    void CalculateFFs();
+    Radiosity();
     private:
-    Matrix<float,2> ffs;
+    Matrix_2d<float> ffs;
 };
 
 #endif //RADIOSITY_H

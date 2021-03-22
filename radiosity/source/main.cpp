@@ -4,6 +4,7 @@ Radiosity Solver by Alejandro Armenta
  YOUAREHERE: 23.5.2.1 Reference Deduction 
 */
 
+#include "space.h"
 #include "radiosity.h"
 
 #if defined(_MSC_VER)
@@ -13,6 +14,8 @@ Radiosity Solver by Alejandro Armenta
 // Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
 // allocations to be of _CLIENT_BLOCK type
 #endif
+
+Space space{};
 
 int main()
 {

@@ -4,7 +4,12 @@
 #define ORTHO_PROJECTOR_H
 
 #include "vec3.h"
+#include "ray.h"
+#include "canvas.h"
 #include "projector.h"
+#include "space.h"
+
+extern Space space;
 
 class OrthoProjector : public Projector 
 {

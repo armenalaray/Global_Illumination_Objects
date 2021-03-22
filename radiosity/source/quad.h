@@ -5,6 +5,8 @@
 
 #include "utility.h"
 #include "ray.h"
+#include "element.h"
+
 
 struct HitRec{
     float u;
@@ -19,7 +21,7 @@ class hitable
 };
 
 
-class Quad : public hitable
+class Quad : public hitable, public Element
 {
     public:
     // NOTE(Alex): hitable override

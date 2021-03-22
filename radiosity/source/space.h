@@ -11,26 +11,22 @@ el color por medio de los uv
 #include <vector>
 #include <memory>
 
+#include "radiosity_solver.h"
 #include "displayable.h"
-#include "integrator.h"
-
-#include "quad.h"
 #include "ray.h"
+#include "quad_manager.h"
 
-class Space : public Displayable , public Integrator
+class Space : public Displayable, public Radiosity_solver
 {
     public:
-    Space():
-    quads{}
-    {}
+    Space()=default;
     // NOTE(Alex): Displayable override
     Color<int> request_color(Ray r, float tMin, float tMax) override;
     
     // NOTE(Alex): Integrator override
-    Element request_element(Ray r, float tMin, float tMax) override;
-    
+    Matrix_2d<float> request_ff_matrix() override;
     private:
-    std::vector<std::shared_ptr<Quad>> quads;
+    Quad_manager qm;
 };
 
 

@@ -9,8 +9,6 @@ class Element;
 
 struct HemiCube{
     HemiCube(int xc, int yc);
-    bool get_next_element(Element& e);
-    
     int xc;
     int yc;
     int y_halfc;
@@ -22,6 +20,9 @@ struct HemiCube{
     float da;
     Vec3<float> vup;
     Vec3<float> other_vup;
+    
+    size_t x;
+    size_t y;
 };
 
 #endif //HEMI_CUBE_H

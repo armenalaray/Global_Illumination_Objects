@@ -11,30 +11,10 @@ half_pw{dx*0.5f},
 half_ph{dy*0.5f},
 da{dx*dy},
 vup{0,1,0},
-other_vup{1,0,0}
+other_vup{1,0,0},
+x{0},
+y{0}
 {
     
-#if 0    
-    size_t HemiCubeXPixelCount = 100;
-    size_t HemiCubeYPixelCount = 100;
-    
-    size_t HemiCubeHalfYPixelCount = size_t((float)HemiCubeYPixelCount*0.5f);
-    float TopFaceSize = 2.0f;
-    float DeltaX = TopFaceSize / HemiCubeXPixelCount;
-    float DeltaY = TopFaceSize / HemiCubeYPixelCount;
-    float HalfPixelWidth = DeltaX * 0.5f;
-    float HalfPixelHeight = DeltaY * 0.5f;
-    float DeltaA = DeltaX * DeltaY;
-    
-    vec3 VUP(0,1,0);
-    
-    // NOTE(Alex): this is for normals that go straight up!!
-    vec3 OtherVUP(1,0,0);
-#endif
-    
-}
-
-bool HemiCube::get_next_element(Element& e){
-    return false;
 }
 

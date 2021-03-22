@@ -3,12 +3,12 @@
 #ifndef INTEGRATOR_H
 #define INTEGRATOR_H
 
-#include "element.h"
+#include "matrix.h"
 #include "ray.h"
 
 class Integrator{
     public:
-    virtual Element request_element(Ray r, float tMin, float tMax) = 0;
+    //virtual Matrix_2d<float> request_ff_matrix() = 0;
 };
 
 #endif //INTEGRATOR_H
