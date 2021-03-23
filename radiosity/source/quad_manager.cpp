@@ -1,5 +1,10 @@
 #include "quad_manager.h"
 
+Quad_manager::Quad_manager()
+{
+    quads.push_back(std::make_shared<Quad_XY_Z0>(Vec3<float>{0,0,0}, 0, 0.f,5.f,0.f,5.f,0.f));
+}
+
 Color<int> Quad_manager::get_color(Ray r, float tMin, float tMax){
     HitRec rec{};
     std::shared_ptr<Quad> a_ref{};
@@ -15,13 +20,13 @@ Color<int> Quad_manager::get_color(Ray r, float tMin, float tMax){
     else return {0,0,0};
 }
 
-Matrix_2d<float> Quad_manager::calc_ff(){
-    Matrix_2d<float> ff(quads.size(),quads.size());
+Matrix<float,2> Quad_manager::calc_ff(){
+    Matrix<float,2> ff(quads.size(),quads.size());
     for(auto a:quads){
         Ray r{};
         while(a->get_ray(r))
         {
-            Element j{};
+            Element_ref j{};
             if(request_element(r, 0.001f, FLT_MAX, j))
                 a->calc_ff(r, j, ff);
         }
@@ -29,7 +34,7 @@ Matrix_2d<float> Quad_manager::calc_ff(){
     return ff;
 }
 
-bool Quad_manager::request_element(Ray r, float tMin, float tMax, Element& e){
+bool Quad_manager::request_element(Ray r, float tMin, float tMax, Element_ref& e){
     HitRec rec{};
     std::shared_ptr<Quad> a_ref{};
     for(auto a:quads){

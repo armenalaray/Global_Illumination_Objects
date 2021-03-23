@@ -16,44 +16,55 @@
 using ElemIndex = typename int;
 enum class corner_it : int {tf=0,rf=1,lf=2,ff=3,bf=4,corner_index_count=5};
 
-struct Element_data{
-    Element_data():
-    n{},
-    p{},
-    i{},
-    
-    u{},
-    v{},
-    w{},
-    
-    corner_i{0},
-    
-    corners{}
-    {}
-    
-    Vec3<float> n;
-    Vec3<float> p;
-    ElemIndex i;
-    
+class Element;
+
+struct Element_impl{
+    Element_impl(){}
+    Element_impl(const Vec3<float>& n,const Vec3<float>& p);
     Vec3<float> u;
     Vec3<float> v;
     Vec3<float> w;
-    
     int corner_i;
-    
     Vec3<float> corners[corner_it::corner_index_count];
+    HemiCube hm;
+};
+
+
+class Element_ref{
+    public:
+    /* 
+    DO NOT have implementation
+     */
+    Element_ref& operator=(const Element& e);
+    Vec3<float> n;
+    Vec3<float> p;
+    ElemIndex i;
 };
 
 class Element{
     public:
-    Element();
-    // NOTE(Alex): Element_base ovverides
+    
+    Element(const Vec3<float>& n, const Vec3<float>& p, const ElemIndex i);
+    
+    Element()=delete;
+    Element(const Element&)=delete;
+    Element& operator=(const Element&)=delete;
+    Element(Element&&)=delete;
+    Element& operator=(Element&&)=delete;
+    
     bool get_ray(Ray& r);
-    void calc_ff(const Ray& r, const Element& j, Matrix_2d<float>& ffm);
-    ElemIndex get_index()const{return data.i;}
+    void calc_ff(const Ray& r, const Element_ref& j, Matrix<float,2>& ffm);
+    ElemIndex get_index()const{return i;}
+    
+    Vec3<float> get_n()const{return n;}
+    Vec3<float> get_p()const{return p;}
+    ElemIndex get_i()const{return i;}
     private:
-    HemiCube hm;
-    Element_data data;
+    Vec3<float> n;
+    Vec3<float> p;
+    ElemIndex i;
+    Element_impl impl;
 };
+
 
 #endif //ELEMENT_H

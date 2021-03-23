@@ -8,6 +8,7 @@
 class Element;
 
 struct HemiCube{
+    HemiCube(){}
     HemiCube(int xc, int yc);
     int xc;
     int yc;

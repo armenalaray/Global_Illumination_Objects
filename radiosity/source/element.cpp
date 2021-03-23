@@ -1,110 +1,131 @@
 #include "element.h"
 
-Element::Element():
-hm{100,100}, data{}
+Element_impl::Element_impl(const Vec3<float>& n, const Vec3<float>& p):
+u{},
+v{},
+w{},
+corner_i{0},
+corners{},
+hm{100,100}
 {
-    data.v = MakeUnitVector(data.n);
-    data.u = MakeUnitVector(Cross(hm.vup,data.v));
+    v = MakeUnitVector(n);
+    u = MakeUnitVector(Cross(hm.vup,v));
     
-    if(data.u.norm() == 0)
+    if(u.norm() == 0)
     {
         // NOTE(Alex): We need to test against other arbitrary vector that is not colinear to v
-        data.u = MakeUnitVector(Cross(hm.other_vup,data.v));
+        u = MakeUnitVector(Cross(hm.other_vup,v));
     }
     
-    data.w = Cross(data.v,data.u);
+    w = Cross(v,u);
     
-    data.corners[static_cast<int>(corner_it::tf)] = data.p +  data.v      + -(1.0f *data.u + 1.0f*data.w);  
-    data.corners[static_cast<int>(corner_it::rf)] = data.p +  1.0f*data.u + -1.0f*data.w;  
-    data.corners[static_cast<int>(corner_it::lf)] = data.p + -1.0f*data.u +  1.0f*data.w;  
-    data.corners[static_cast<int>(corner_it::ff)] = data.p +  1.0f*data.u +  1.0f*data.w;  
-    data.corners[static_cast<int>(corner_it::bf)] = data.p + -1.0f*data.u + -1.0f*data.w;
+    corners[static_cast<int>(corner_it::tf)] = p +  v      + -(1.0f *u + 1.0f*w);  
+    corners[static_cast<int>(corner_it::rf)] = p +  1.0f*u + -1.0f*w;  
+    corners[static_cast<int>(corner_it::lf)] = p + -1.0f*u +  1.0f*w;  
+    corners[static_cast<int>(corner_it::ff)] = p +  1.0f*u +  1.0f*w;  
+    corners[static_cast<int>(corner_it::bf)] = p + -1.0f*u + -1.0f*w;
+}
+
+// TODO(Alex): Implement other constructors and assignment operators?
+Element_ref& Element_ref::operator=(const Element& e){
+    n = e.get_n();
+    p = e.get_p();
+    i = e.get_i();
+    return *this;
+}
+
+Element::Element(const Vec3<float>& n_, const Vec3<float>& p_, const ElemIndex i_):
+n{n_},
+p{p_},
+i{i_},
+impl{n,p}
+{
 }
 
 bool Element::get_ray(Ray& r){
-    if(data.corner_i>=5) return false;
-    switch(data.corner_i)
+    if(impl.corner_i>=5) return false;
+    switch(impl.corner_i)
     {
         case corner_it::tf:
         {
-            if(hm.y>=hm.yc) {++data.corner_i; hm.y=0; hm.x=0;}
-            if(hm.x>=hm.xc) {hm.x=0;++hm.y;}
+            if(impl.hm.y>=impl.hm.yc) {++impl.corner_i; impl.hm.y=0; impl.hm.x=0;}
+            if(impl.hm.x>=impl.hm.xc) {impl.hm.x=0;++impl.hm.y;}
             
-            float NX = 2.0f*(float(hm.x) / float(hm.xc)) + hm.half_pw;
-            float NY = 2.0f*(float(hm.y) / float(hm.yc)) + hm.half_ph;
+            float NX = 2.0f*(float(impl.hm.x) / float(impl.hm.xc)) + impl.hm.half_pw;
+            float NY = 2.0f*(float(impl.hm.y) / float(impl.hm.yc)) + impl.hm.half_ph;
             
-            Vec3<float> RDirection = (data.corners[data.corner_i] + NX*data.u + NY*data.w) - data.p;
-            r = Ray{data.p, RDirection};
+            Vec3<float> RDirection = (impl.corners[impl.corner_i] + NX*impl.u + NY*impl.w) - p;
+            r = Ray{p, RDirection};
             
-            ++hm.x;
+            ++impl.hm.x;
         }break;
         case corner_it::rf:
         {
-            if(hm.y>=hm.y_halfc) {++data.corner_i; hm.y=0; hm.x=0;}
-            if(hm.x>=hm.xc){hm.x=0;++hm.y;}
+            if(impl.hm.y>=impl.hm.y_halfc) {++impl.corner_i; impl.hm.y=0; impl.hm.x=0;}
+            if(impl.hm.x>=impl.hm.xc){impl.hm.x=0;++impl.hm.y;}
             
-            float NX = 2.0f*(float(hm.x) / float(hm.xc)) + hm.half_pw;
-            float NY = 2.0f*(float(hm.y) / float(hm.yc)) + hm.half_ph;
+            float NX = 2.0f*(float(impl.hm.x) / float(impl.hm.xc)) + impl.hm.half_pw;
+            float NY = 2.0f*(float(impl.hm.y) / float(impl.hm.yc)) + impl.hm.half_ph;
             
-            Vec3<float> RDirection = (data.corners[data.corner_i] + NX*data.w + NY*data.v) - data.p;
-            r = Ray{data.p, RDirection};
+            Vec3<float> RDirection = (impl.corners[impl.corner_i] + NX*impl.w + NY*impl.v) - p;
+            r = Ray{p, RDirection};
             
-            ++hm.x;
+            ++impl.hm.x;
         }break;
         case corner_it::lf:
         {
-            if(hm.y>=hm.y_halfc) {++data.corner_i; hm.y=0; hm.x=0;}
-            if(hm.x>=hm.xc){hm.x=0;++hm.y;}
+            if(impl.hm.y>=impl.hm.y_halfc) {++impl.corner_i; impl.hm.y=0; impl.hm.x=0;}
+            if(impl.hm.x>=impl.hm.xc){impl.hm.x=0;++impl.hm.y;}
             
-            float NX = 2.0f*(float(hm.x) / float(hm.xc)) + hm.half_pw;
-            float NY = 2.0f*(float(hm.y) / float(hm.yc)) + hm.half_ph;
+            float NX = 2.0f*(float(impl.hm.x) / float(impl.hm.xc)) + impl.hm.half_pw;
+            float NY = 2.0f*(float(impl.hm.y) / float(impl.hm.yc)) + impl.hm.half_ph;
             
-            Vec3<float> RDirection = (data.corners[data.corner_i] + -NX*data.w + NY*data.v) - data.p;
-            r = Ray{data.p, RDirection};
+            Vec3<float> RDirection = (impl.corners[impl.corner_i] + -NX*impl.w + NY*impl.v) - p;
+            r = Ray{p, RDirection};
             
-            ++hm.x;
+            ++impl.hm.x;
         }break;
         case corner_it::ff:
         {
-            if(hm.y>=hm.y_halfc) {++data.corner_i; hm.y=0; hm.x=0;}
-            if(hm.x>=hm.xc){hm.x=0;++hm.y;}
+            if(impl.hm.y>=impl.hm.y_halfc) {++impl.corner_i; impl.hm.y=0; impl.hm.x=0;}
+            if(impl.hm.x>=impl.hm.xc){impl.hm.x=0;++impl.hm.y;}
             
-            float NX = 2.0f*(float(hm.x) / float(hm.xc)) + hm.half_pw;
-            float NY = 2.0f*(float(hm.y) / float(hm.yc)) + hm.half_ph;
+            float NX = 2.0f*(float(impl.hm.x) / float(impl.hm.xc)) + impl.hm.half_pw;
+            float NY = 2.0f*(float(impl.hm.y) / float(impl.hm.yc)) + impl.hm.half_ph;
             
-            Vec3<float> RDirection = (data.corners[data.corner_i] + -NX*data.u + NY*data.v) - data.p;
-            r = Ray{data.p, RDirection};
+            Vec3<float> RDirection = (impl.corners[impl.corner_i] + -NX*impl.u + NY*impl.v) - p;
+            r = Ray{p, RDirection};
             
-            ++hm.x;
+            ++impl.hm.x;
         }break;
         case corner_it::bf:
         {
-            if(hm.y>=hm.y_halfc) {++data.corner_i; hm.y=0; hm.x=0;}
-            if(hm.x>=hm.xc){hm.x=0;++hm.y;}
+            if(impl.hm.y>=impl.hm.y_halfc) {++impl.corner_i; impl.hm.y=0; impl.hm.x=0;}
+            if(impl.hm.x>=impl.hm.xc){impl.hm.x=0;++impl.hm.y;}
             
-            float NX = 2.0f*(float(hm.x) / float(hm.xc)) + hm.half_pw;
-            float NY = 2.0f*(float(hm.y) / float(hm.yc)) + hm.half_ph;
+            float NX = 2.0f*(float(impl.hm.x) / float(impl.hm.xc)) + impl.hm.half_pw;
+            float NY = 2.0f*(float(impl.hm.y) / float(impl.hm.yc)) + impl.hm.half_ph;
             
-            Vec3<float> RDirection = (data.corners[data.corner_i] + NX*data.u + NY*data.v) - data.p;
-            r = Ray{data.p, RDirection};
+            Vec3<float> RDirection = (impl.corners[impl.corner_i] + NX*impl.u + NY*impl.v) - p;
+            r = Ray{p, RDirection};
             
-            ++hm.x;
+            ++impl.hm.x;
         }break;
     }
     return true;
 }
 
 
-void Element::calc_ff(const Ray& ray, const Element& j, Matrix_2d<float>& ffm){
+void Element::calc_ff(const Ray& ray, const Element_ref& j, Matrix<float,2>& ffm){
     float r = ray.get_direction().squared_norm();
     Vec3<float> ij = MakeUnitVector(ray.get_direction());
     Vec3<float> ji = MakeUnitVector(-ray.get_direction());
-    float Dotji = dot(j.data.n,ji);
+    float Dotji = dot(j.n,ji);
     
     if(Dotji > 0.0f)
     {
-        float Value{((dot(data.v, ij) * Dotji * hm.da) / ((float)M_PI  * r * r))};
-        ffm(data.i,j.data.i) += Value;
+        float Value{((dot(impl.v, ij) * Dotji * impl.hm.da) / ((float)M_PI  * r * r))};
+        ffm(i,j.i) += Value;
     }
 }
 

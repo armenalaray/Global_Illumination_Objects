@@ -3,6 +3,8 @@
 #ifndef RADIOSITY_H
 #define RADIOSITY_H
 
+#include <string>
+
 #include "matrix.h"
 #include "hemi_cube.h"
 #include "element.h"
@@ -14,7 +16,7 @@ class Radiosity{
     public:
     Radiosity();
     private:
-    Matrix_2d<float> ffs;
+    Matrix<float,2> f;
 };
 
 #endif //RADIOSITY_H

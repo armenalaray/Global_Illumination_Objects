@@ -7,7 +7,7 @@
 
 class Radiosity_solver{
     public:
-    virtual Matrix_2d<float> request_ff_matrix() = 0;
+    virtual Matrix<float,2> request_ff_matrix() = 0;
 };
 
 #endif //RADIOSITY_SOLVER_H

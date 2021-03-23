@@ -19,12 +19,12 @@ el color por medio de los uv
 class Space : public Displayable, public Radiosity_solver
 {
     public:
-    Space()=default;
+    Space();
     // NOTE(Alex): Displayable override
     Color<int> request_color(Ray r, float tMin, float tMax) override;
     
     // NOTE(Alex): Integrator override
-    Matrix_2d<float> request_ff_matrix() override;
+    Matrix<float,2> request_ff_matrix() override;
     private:
     Quad_manager qm;
 };
