@@ -45,7 +45,7 @@ class Quad_XY_Z0 : public Quad
     public:
     Quad_XY_Z0(const Vec3<float>& p, const ElemIndex i,
                const float x0_,const float x1_,const float y0_,const float y1_,const float k_):
-    Quad{Vec3<float>{0,0,0},p,i},
+    Quad{Vec3<float>{0,0,1.f},p,i},
     x0{x0_},x1{x1_},y0{y0_},y1{y1_},k{k_}
     {}
     // NOTE(Alex): hitable override
@@ -57,10 +57,15 @@ class Quad_XY_Z0 : public Quad
     float x0,x1,y0,y1,k;
 };
 
-#if 0
 class Quad_YZ_X0 : public Quad
 {
     public:
+    Quad_YZ_X0(const Vec3<float>& p, const ElemIndex i,
+               const float y0_,const float y1_,const float z0_,const float z1_,const float k_):
+    Quad{Vec3<float>{1.f,0,0},p,i},
+    y0{y0_},y1{y1_},z0{z0_},z1{z1_},k{k_}
+    {}
+    
     // NOTE(Alex): hitable override
     bool hit(Ray & r, float tMin, float tMax, HitRec & HitRecord) override;
     // NOTE(Alex): Quad override
@@ -72,6 +77,12 @@ class Quad_YZ_X0 : public Quad
 class Quad_XZ_Y0 : public Quad
 {
     public:
+    Quad_XZ_Y0(const Vec3<float>& p, const ElemIndex i,
+               const float x0_,const float x1_,const float z0_,const float z1_,const float k_):
+    Quad{Vec3<float>{0,1.f,0},p,i},
+    x0{x0_},x1{x1_},z0{z0_},z1{z1_},k{k_}
+    {}
+    
     // NOTE(Alex): hitable override
     bool hit(Ray & r, float tMin, float tMax, HitRec & HitRecord) override;
     // NOTE(Alex): Quad override
@@ -83,6 +94,12 @@ class Quad_XZ_Y0 : public Quad
 class Quad_YZ_X5 : public Quad
 {
     public:
+    Quad_YZ_X5(const Vec3<float>& p, const ElemIndex i,
+               const float y0_,const float y1_,const float z0_,const float z1_,const float k_):
+    Quad{Vec3<float>{-1.f,0,0},p,i},
+    y0{y0_},y1{y1_},z0{z0_},z1{z1_},k{k_}
+    {}
+    
     // NOTE(Alex): hitable override
     bool hit(Ray & r, float tMin, float tMax, HitRec & HitRecord) override;
     // NOTE(Alex): Quad override
@@ -94,6 +111,12 @@ class Quad_YZ_X5 : public Quad
 class Quad_XZ_Y5 : public Quad
 {
     public:
+    Quad_XZ_Y5(const Vec3<float>& p, const ElemIndex i,
+               const float x0_,const float x1_,const float z0_,const float z1_,const float k_):
+    Quad{Vec3<float>{0,-1.f,0},p,i},
+    x0{x0_},x1{x1_},z0{z0_},z1{z1_},k{k_}
+    {}
+    
     // NOTE(Alex): hitable override
     bool hit(Ray & r, float tMin, float tMax, HitRec & HitRecord) override;
     // NOTE(Alex): Quad override
@@ -103,4 +126,3 @@ class Quad_XZ_Y5 : public Quad
 };
 #endif
 
-#endif //FACE_H

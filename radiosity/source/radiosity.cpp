@@ -4,6 +4,10 @@ Radiosity::Radiosity():
 f{}
 {
     f=space.request_ff_matrix();
+    
+    std::string FString = "F" + std::to_string(0) + "_matrix.ppm";
+    f.debug_print(FString);
+    
     auto n=f.get_extent(0);
     Matrix<float,1> vp(n);
     Matrix<float,1> e(n);
@@ -13,6 +17,7 @@ f{}
     Matrix<float,2> k(n,n);
     Matrix<float,2> m(n,n);
     
+    m.make_identity();
     p.make_diagonal(vp);
     
     std::string PString = "P" + std::to_string(0) + "_matrix.ppm";

@@ -40,7 +40,6 @@ class Vec3
 };
 
 template<typename T>
-// TODO(Alex): Add concept
 std::ostream& operator<<(std::ostream& o, Vec3<T> v){
     return o<<'{' << v.x << v.y << v.z << '}';
 }

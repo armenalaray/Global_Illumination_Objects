@@ -23,7 +23,6 @@ Color<int> Quad_XY_Z0::get_color(float u, float v)
 }
 
 
-#if 0
 // NOTE(Alex): YZ (0,0) (5,5) X = 0
 Color<int> Quad_YZ_X0::get_color(float u, float v)
 {
@@ -112,7 +111,6 @@ Color<int> Quad_XZ_Y5::get_color(float u, float v)
     int ib = int(255.99 * d.b);
     return {ir,ig,ib};
 }
-#endif
 
 bool Quad_XY_Z0::hit(Ray & r, float tMin, float tMax, HitRec & HitRecord){
     float t = (k - r.get_origin().z) / r.get_direction().z;
@@ -132,7 +130,6 @@ bool Quad_XY_Z0::hit(Ray & r, float tMin, float tMax, HitRec & HitRecord){
 }
 
 
-#if 0
 bool Quad_YZ_X0::hit(Ray & r, float tMin, float tMax, HitRec & HitRecord){
     float t = (k - r.get_origin().x) / r.get_direction().x;
 	
@@ -199,4 +196,3 @@ bool Quad_XZ_Y5::hit(Ray & r, float tMin, float tMax, HitRec & HitRecord){
     HitRecord.v = ((x - x0) / (x1 - x0));
     return true;
 }
-#endif
