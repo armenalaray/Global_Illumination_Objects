@@ -4,19 +4,21 @@
 #define RADIOSITY_H
 
 #include <string>
-
 #include "matrix.h"
-#include "hemi_cube.h"
-#include "element.h"
-#include "space.h"
-
-extern Space space;
+#include "ray.h"
+#include "quad_manager.h"
+#include "stimuli.h"
 
 class Radiosity{
     public:
-    Radiosity();
+    Radiosity(float fw, int hps);
+    Color<int> get_color(Ray ray, float tMin, float tMax){return qm.get_color(ray, tMin, tMax);}
     private:
+    Quad_manager qm;
     Matrix<float,2> f;
+    Stimuli r_s;
+    Stimuli g_s;
+    Stimuli b_s;
 };
 
 #endif //RADIOSITY_H

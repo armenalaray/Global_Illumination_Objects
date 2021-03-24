@@ -1,9 +1,10 @@
 #include "quad_manager.h"
 
-Quad_manager::Quad_manager()
+Quad_manager::Quad_manager(float fw_, int hps_):
+fw{fw_},
+hps{hps_},
+quads{}
 {
-    size_t hps = 5;
-    float fw = 5.0f;
     float s = fw / float(hps);
     ElemIndex ei=0;
     
@@ -101,7 +102,6 @@ Quad_manager::Quad_manager()
         Vec3<float> p{x0+0.5f*x1, y,z0+0.5f*z1};
         quads.push_back(std::make_shared<Quad_XZ_Y5>(p, ei, x0,x1,z0,z1,y));
     }
-    
 }
 
 Color<int> Quad_manager::get_color(Ray r, float tMin, float tMax){

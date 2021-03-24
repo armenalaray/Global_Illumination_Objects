@@ -10,11 +10,15 @@
 #include "element.h"
 class Quad_manager{
     public:
-    Quad_manager();
+    Quad_manager(float fw, int hps);
     Color<int> get_color(Ray r, float tMin, float tMax);
     Matrix<float,2> calc_ff();
+    int get_face_count();
+    int get_hitables_per_side_face();
     private:
     bool request_element(Ray r, float tMin, float tMax, Element_ref& e);
+    float fw;
+    int hps;
     std::vector<std::shared_ptr<Quad>> quads;
 };
 

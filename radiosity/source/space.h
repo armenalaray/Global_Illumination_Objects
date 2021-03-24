@@ -11,22 +11,18 @@ el color por medio de los uv
 #include <vector>
 #include <memory>
 
-#include "radiosity_solver.h"
 #include "displayable.h"
 #include "ray.h"
-#include "quad_manager.h"
+#include "radiosity.h"
 
-class Space : public Displayable, public Radiosity_solver
+class Space : public Displayable
 {
     public:
-    Space();
+    Space(float fw, int hps);
     // NOTE(Alex): Displayable override
     Color<int> request_color(Ray r, float tMin, float tMax) override;
-    
-    // NOTE(Alex): Integrator override
-    Matrix<float,2> request_ff_matrix() override;
     private:
-    Quad_manager qm;
+    Radiosity r;
 };
 
 

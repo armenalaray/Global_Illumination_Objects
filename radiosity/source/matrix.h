@@ -93,6 +93,8 @@ class Matrix<T,2>{
     elem(desc.size())
     {}
     
+    //Matrix(const Matrix& o);
+    
     T& operator()(const size_t row_i, const size_t col_i);
     const T& operator()(const size_t row_i, const size_t col_i)const;
     size_t get_extent(size_t i)const{return desc.extent(i);}

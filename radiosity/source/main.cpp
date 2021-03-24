@@ -16,7 +16,11 @@ Radiosity Solver by Alejandro Armenta
 // allocations to be of _CLIENT_BLOCK type
 #endif
 
-Space space{};
+Space space{5.0f,5};
+
+/* 
+La interfaz es el render, o los renders no el radiosity!!!
+ */
 
 int main()
 {
@@ -74,7 +78,6 @@ int main()
     c=mult_m(a,b);
     std::cout << c << std::endl;
 #endif
-        Radiosity r{};
     //OrthoProjector o{};
     //o.render();
 }

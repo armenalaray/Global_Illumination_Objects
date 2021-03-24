@@ -8,6 +8,8 @@
 class Radiosity_solver{
     public:
     virtual Matrix<float,2> request_ff_matrix() = 0;
+    virtual int request_face_count() = 0;
+    virtual int request_hitables_per_side_face() = 0;
 };
 
 #endif //RADIOSITY_SOLVER_H

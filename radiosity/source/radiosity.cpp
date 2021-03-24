@@ -1,50 +1,63 @@
 #include "radiosity.h"
 
-Radiosity::Radiosity():
-f{}
+Radiosity::Radiosity(float fw, int hps):
+qm{fw,hps},
+f(qm.calc_ff()),
+r_s{5, fw, hps, f, 15.0f, 0.73f, 0.12f, 0.73f, 0.65f, 0.73f},
+g_s{5, fw, hps, f, 15.0f, 0.73f, 0.45f, 0.73f, 0.05f, 0.73f},
+b_s{5, fw, hps, f, 15.0f, 0.73f, 0.15f, 0.73f, 0.05f, 0.73f}
 {
-    f=space.request_ff_matrix();
-    
     std::string FString = "F" + std::to_string(0) + "_matrix.ppm";
     f.debug_print(FString);
     
-    auto n=f.get_extent(0);
-    Matrix<float,1> vp(n);
-    Matrix<float,1> e(n);
-    Matrix<float,1> b(n);
-    Matrix<float,1> residual(n);
-    Matrix<float,2> p(n,n);
-    Matrix<float,2> k(n,n);
-    Matrix<float,2> m(n,n);
-    
-    m.make_identity();
-    p.make_diagonal(vp);
-    
-    std::string PString = "P" + std::to_string(0) + "_matrix.ppm";
-    p.debug_print(PString);
-    k= sub_m(m,mult_m(p, f));
-    
-    std::string KString = "K" + std::to_string(0) + "_matrix.ppm";
-    k.debug_print(KString);
-    
-    for(;;)
     {
-        residual=sub_m(e,mult_m(k,b));
-        std::string ResidualString = "Residual" + std::to_string(0) + "_matrix.ppm";
-        residual.debug_print(ResidualString);
+        /* 
+         Red stimuli
+         */
+        std::string PString = "P_r_s_matrix.ppm";
+        r_s.p.debug_print(PString);
         
-        float norm = residual.squared_norm();
-        if(norm < 0.1f)
-        {
-            break;
-        }
+        std::string KString = "K_r_s_matrix.ppm";
+        r_s.k.debug_print(KString);
         
-        num_solver_gs(k, b, e);
+        std::string ResidualString = "Residual_r_s_matrix.ppm";
+        r_s.residual.debug_print(ResidualString);
         
-        std::string BString = "B" + std::to_string(0) + "_matrix.ppm";
-        b.debug_print(BString);
+        std::string BString = "B_r_s_matrix.ppm";
+        r_s.b.debug_print(BString);
     }
-    
+    {
+        /* 
+        Green stimuli
+         */
+        std::string PString = "P_g_s_matrix.ppm";
+        g_s.p.debug_print(PString);
+        
+        std::string KString = "K_g_s_matrix.ppm";
+        g_s.k.debug_print(KString);
+        
+        std::string ResidualString = "Residual_g_s_matrix.ppm";
+        g_s.residual.debug_print(ResidualString);
+        
+        std::string BString = "B_g_s_matrix.ppm";
+        g_s.b.debug_print(BString);
+    }
+    {
+        /* 
+         Blue stimuli
+         */
+        std::string PString = "P_b_s_matrix.ppm";
+        b_s.p.debug_print(PString);
+        
+        std::string KString = "K_b_s_matrix.ppm";
+        b_s.k.debug_print(KString);
+        
+        std::string ResidualString = "Residual_b_s_matrix.ppm";
+        b_s.residual.debug_print(ResidualString);
+        
+        std::string BString = "B_b_s_matrix.ppm";
+        b_s.b.debug_print(BString);
+    }
 }
 
 
