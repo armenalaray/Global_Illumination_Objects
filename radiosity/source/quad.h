@@ -1,7 +1,7 @@
 /* date = March 16th 2021 2:53 pm */
 
-#ifndef FACE_H
-#define FACE_H
+#ifndef QUAD_H
+#define QUAD_H
 
 #include "utility.h"
 #include "ray.h"
@@ -21,7 +21,6 @@ class hitable
     virtual bool hit(Ray & r, float tMin, float tMax, HitRec & HitRecord) = 0;
 };
 
-
 class Quad : public hitable, public Element
 {
     public:
@@ -36,7 +35,6 @@ class Quad : public hitable, public Element
     {}
     virtual bool hit(Ray & r, float tMin, float tMax, HitRec & HitRecord) = 0;
     virtual Color<int> get_color(float u, float v) = 0;
-    protected:
     Color<float> c[4];
 };
 

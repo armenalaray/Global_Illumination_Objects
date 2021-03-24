@@ -8,17 +8,24 @@
 #include "ray.h"
 #include "quad.h"
 #include "element.h"
+#include "face.h"
+
 class Quad_manager{
     public:
     Quad_manager(float fw, int hps);
     Color<int> get_color(Ray r, float tMin, float tMax);
     Matrix<float,2> calc_ff();
-    int get_face_count();
-    int get_hitables_per_side_face();
+    void move_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b);
     private:
     bool request_element(Ray r, float tMin, float tMax, Element_ref& e);
     float fw;
     int hps;
+    ElemIndex ei;
+    Face_xy_z0 f_xy_z0;
+    Face_yz_x0 f_yz_x0;
+    Face_xz_y0 f_xz_y0;
+    Face_yz_x5 f_yz_x5;
+    Face_xz_y5 f_xz_y5;
     std::vector<std::shared_ptr<Quad>> quads;
 };
 
