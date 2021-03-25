@@ -64,6 +64,19 @@ void Face::generate_mapping(){
                     bl = {f(i-1,j-1)};
             }
             
+            cm.push_back(std::pair<std::shared_ptr<Quad>,Mapping>{f(i,j),Mapping
+                             {
+                                 ur,
+                                 u,
+                                 ul,
+                                 r,
+                                 k,
+                                 l,
+                                 br,
+                                 b,
+                                 bl
+                             }});
+#if 0            
             cm[f(i,j)] = Mapping
             {
                 ur,
@@ -76,11 +89,12 @@ void Face::generate_mapping(){
                 b,
                 bl
             };
+#endif
         }
     }
 }
 
-Face_xy_z0::Face_xy_z0(float fw, int hps, ElemIndex& ei):
+Face_xy_z0::Face_xy_z0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
     float s = fw / float(hps);
@@ -96,10 +110,11 @@ Face(ei,hps,hps)
         }
     }
     generate_mapping();
+    for(auto i:cm)qmv.push_back(i.first);
 }
 
 
-Face_yz_x0::Face_yz_x0(float fw, int hps, ElemIndex& ei):
+Face_yz_x0::Face_yz_x0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
     float s = fw / float(hps);
@@ -115,10 +130,11 @@ Face(ei,hps,hps)
         }
     }
     generate_mapping();
+    for(auto i:cm)qmv.push_back(i.first);
 }
 
 
-Face_xz_y0::Face_xz_y0(float fw, int hps, ElemIndex& ei):
+Face_xz_y0::Face_xz_y0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
     float s = fw / float(hps);
@@ -134,10 +150,11 @@ Face(ei,hps,hps)
         }
     }
     generate_mapping();
+    for(auto i:cm)qmv.push_back(i.first);
 }
 
 
-Face_yz_x5::Face_yz_x5(float fw, int hps, ElemIndex& ei):
+Face_yz_x5::Face_yz_x5(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
     float s = fw / float(hps);
@@ -153,10 +170,11 @@ Face(ei,hps,hps)
         }
     }
     generate_mapping();
+    for(auto i:cm)qmv.push_back(i.first);
 }
 
 
-Face_xz_y5::Face_xz_y5(float fw, int hps, ElemIndex& ei):
+Face_xz_y5::Face_xz_y5(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
     float s = fw / float(hps);
@@ -172,7 +190,25 @@ Face(ei,hps,hps)
         }
     }
     generate_mapping();
+    for(auto i:cm)qmv.push_back(i.first);
 }
+
+
+Face_emissor::Face_emissor(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
+Face(ei,1,1)
+{
+    float half_d = fw * 0.25f;
+    float x0 = fw * 0.5f - half_d;
+    float x1 = fw * 0.5f + half_d;
+    float z0 = fw * 0.5f - half_d;
+    float z1 = fw * 0.5f + half_d;
+    float y=fw - 0.1f;
+    Vec3<float> p{x0+0.5f*x1, y,z0+0.5f*z1};
+    f(0,0) = std::make_shared<Quad_XZ_Y5>(p, ei, x0,x1,z0,z1,y);
+    generate_mapping();
+    for(auto i:cm)qmv.push_back(i.first);
+}
+
 
 void Face_xy_z0::add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b){
     ElemIndex i=si;
@@ -243,6 +279,23 @@ void Face_yz_x5::add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>&
 }
 
 void Face_xz_y5::add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b){
+    ElemIndex i=si;
+    for(auto a:cm){
+        auto mapping=a.second;
+        mapping.ur.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.ur.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.u.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.ul.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.r.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.l.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.br.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.b.add_color(Color<float>{r(i),g(i),b(i)});
+        mapping.bl.add_color(Color<float>{r(i),g(i),b(i)});
+        ++i;
+    }
+}
+
+void Face_emissor::add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b){
     ElemIndex i=si;
     for(auto a:cm){
         auto mapping=a.second;

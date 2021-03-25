@@ -21,12 +21,13 @@ class Quad_manager{
     float fw;
     int hps;
     ElemIndex ei;
+    std::vector<std::shared_ptr<Quad>> quads;
     Face_xy_z0 f_xy_z0;
     Face_yz_x0 f_yz_x0;
     Face_xz_y0 f_xz_y0;
     Face_yz_x5 f_yz_x5;
     Face_xz_y5 f_xz_y5;
-    std::vector<std::shared_ptr<Quad>> quads;
+    Face_emissor e;
 };
 
 #endif //QUAD_MANAGER_H

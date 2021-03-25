@@ -4,54 +4,14 @@ Quad_manager::Quad_manager(float fw_, int hps_):
 fw{fw_},
 hps{hps_},
 ei{0},
-f_xy_z0{fw,hps,ei},
-f_yz_x0{fw,hps,ei},
-f_xz_y0{fw,hps,ei},
-f_yz_x5{fw,hps,ei},
-f_xz_y5{fw,hps,ei}
+quads{},
+f_xy_z0{fw,hps,ei,quads},
+f_yz_x0{fw,hps,ei,quads},
+f_xz_y0{fw,hps,ei,quads},
+f_yz_x5{fw,hps,ei,quads},
+f_xz_y5{fw,hps,ei,quads},
+e{fw,hps,ei,quads}
 {
-    /* 
-    TODO(Alex): Emissor
-     */
-#if 0    
-    // NOTE(Alex): Emissor
-    {
-        float half_d = fw * 0.25f;
-        
-        float x0 = fw * 0.5f - half_d;
-        float x1 = fw * 0.5f + half_d;
-        float z0 = fw * 0.5f - half_d;
-        float z1 = fw * 0.5f + half_d;
-        float y=fw - 0.1f;
-        Vec3<float> p{x0+0.5f*x1, y,z0+0.5f*z1};
-        quads.push_back(std::make_shared<Quad_XZ_Y5>(p, ei, x0,x1,z0,z1,y));
-    }
-#endif
-    
-    for(auto i:f_xy_z0.cm)
-    {
-        quads.push_back(i.first);
-    }
-    
-    for(auto i:f_yz_x0.cm)
-    {
-        quads.push_back(i.first);
-    }
-    
-    for(auto i:f_xz_y0.cm)
-    {
-        quads.push_back(i.first);
-    }
-    
-    for(auto i:f_yz_x5.cm)
-    {
-        quads.push_back(i.first);
-    }
-    
-    for(auto i:f_xz_y5.cm)
-    {
-        quads.push_back(i.first);
-    }
 }
 
 Color<int> Quad_manager::get_color(Ray r, float tMin, float tMax){
@@ -84,7 +44,7 @@ Matrix<float,2> Quad_manager::calc_ff(){
     return ff;
 }
 
-bool Quad_manager::request_element(Ray r, float tMin, float tMax, Element_ref& e){
+bool Quad_manager::request_element(Ray r, float tMin, float tMax, Element_ref& element){
     HitRec rec{};
     std::shared_ptr<Quad> a_ref{};
     for(auto a:quads){
@@ -95,7 +55,7 @@ bool Quad_manager::request_element(Ray r, float tMin, float tMax, Element_ref& e
         }
     }
     // NOTE(Alex): Slicing
-    if(a_ref.get()){e = *a_ref; return true;}
+    if(a_ref.get()){element = *a_ref; return true;}
     else return false;
 }
 
@@ -105,4 +65,5 @@ void Quad_manager::move_radiosities(const Matrix<float,1>& r,const Matrix<float,
     f_xz_y0.add_radiosities(r,g,b);
     f_yz_x5.add_radiosities(r,g,b);
     f_xz_y5.add_radiosities(r,g,b);
+    e.add_radiosities(r,g,b);
 }
