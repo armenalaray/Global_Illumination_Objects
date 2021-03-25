@@ -66,4 +66,17 @@ void Quad_manager::move_radiosities(const Matrix<float,1>& r,const Matrix<float,
     f_yz_x5.add_radiosities(r,g,b);
     f_xz_y5.add_radiosities(r,g,b);
     e.add_radiosities(r,g,b);
+    
+    std::string f_xy_z0_s = "f_xy_z0.ppm";
+    std::string f_yz_x0_s = "f_yz_x0.ppm";
+    std::string f_xz_y0_s = "f_xz_y0.ppm";
+    std::string f_yz_x5_s = "f_yz_x5.ppm";
+    std::string f_xz_y5_s = "f_xz_y5.ppm";
+    std::string f_e = "f_e.ppm";
+    f_xy_z0.debug_print(f_xy_z0_s);
+    f_yz_x0.debug_print(f_yz_x0_s);
+    f_xz_y0.debug_print(f_xz_y0_s);
+    f_yz_x5.debug_print(f_yz_x5_s);
+    f_xz_y5.debug_print(f_xz_y5_s);
+    e.debug_print(f_e);
 }

@@ -14,7 +14,7 @@ extern Space space;
 class OrthoProjector : public Projector 
 {
     public:
-    void render() override;
+    void render(float fw, float fh, int th, int tw);
     private:
 };
 

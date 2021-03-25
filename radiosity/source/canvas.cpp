@@ -5,7 +5,7 @@ void Canvas::set_base()
     
 }
 
-Canvas::Canvas(const Vec3<float>& X_, const Vec3<float>& Y_, const Vec3<float>& O_, const int th, const int tw, const float cg_): 
+Canvas::Canvas(const Vec3<float>& X_, const Vec3<float>& Y_, const Vec3<float>& O_, const float fw_, const float fh_, const int th, const int tw, const float cg_): 
 X{X_}, 
 Y{Y_},
 Origin{O_},
@@ -14,19 +14,17 @@ ShiftX{cg * 0.5f * X},
 ShiftY{cg * 0.5f * Y},
 tx{tw}, 
 ty{th}, 
-// TODO(Alex): Do we want this hardcoded???
-wx{5.0f},
-wy{5.0f},
+fw{fw_},
+fh{fh_},
 px{0}, 
 py{th - 1}
 {}
 
 bool Canvas::open_ppm_file(std::string file_s)
 {
-    std::ofstream FFMatrix;
-    FFMatrix.open(file_s, std::ios::trunc | std::ios::out);
-    if(FFMatrix.is_open()){
-        FFMatrix << "P3\n" << tx << " " << ty << "\n255\n";
+    fs.open(file_s, std::ios::trunc | std::ios::out);
+    if(fs.is_open()){
+        fs << "P3\n" << tx << " " << ty << "\n255\n";
         return true;
     }
     return false;
@@ -60,16 +58,16 @@ std::pair<Vec3<float>,Vec3<float>> Canvas::conv_uv_to_world(std::pair<float,floa
 {
     return 
     {
-        (std::get<0>(p) * (wx - cg)) * X,
-        (std::get<1>(p) * (wy - cg)) * Y,
+        (std::get<0>(p) * (fw - cg)) * X,
+        (std::get<1>(p) * (fh - cg)) * Y,
     };
 }
 
 void Canvas::write_color(Color<int>& c)
 {
-    
+    fs << c.r << " " << c.g << " " << c.b << std::endl;
 }
 
 void Canvas::close_ppm_file(){
-    
+    fs.close();
 }

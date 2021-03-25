@@ -38,6 +38,7 @@ class Quad : public hitable, public Element
     Color<float> c[4];
 };
 
+
 class Quad_XY_Z0 : public Quad 
 {
     public:

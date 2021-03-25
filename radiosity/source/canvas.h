@@ -11,7 +11,7 @@
 
 class Canvas{
     public:
-    Canvas(const Vec3<float>& X_, const Vec3<float>& Y_, const Vec3<float>& O_, const int th, const int tw, const float cg_ = 0.0f);
+    Canvas(const Vec3<float>& X_, const Vec3<float>& Y_, const Vec3<float>& O_, const float fw, const float fh, const int th, const int tw, const float cg_ = 0.0f);
     void set_base();
     void generate_ray();
     bool open_ppm_file(std::string);
@@ -30,10 +30,11 @@ class Canvas{
     Vec3<float> ShiftY;
     int tx;
     int ty;
-    float wx;
-    float wy;
+    float fw;
+    float fh;
     int px;
     int py;
+    std::ofstream fs;
 };
 
 #endif //CANVAS_H

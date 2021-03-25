@@ -4,8 +4,8 @@
 #define FACE_H
 
 #include <memory>
-#include <unordered_map>
 #include <vector>
+#include <string>
 
 #include "matrix.h"
 #include "quad.h"
@@ -42,12 +42,11 @@ class Face{
         cm.reserve(i*j);
     }
     void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b);
+    void debug_print(std::string fn);
     protected:
     void generate_mapping();
     ElemIndex si;
     Matrix<std::shared_ptr<Quad>,2> f;
-    public:
-    //std::unordered_map<std::shared_ptr<Quad>,Mapping> cm;
     std::vector<std::pair<std::shared_ptr<Quad>,Mapping>> cm;
 };
 

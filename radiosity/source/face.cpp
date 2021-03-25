@@ -76,20 +76,6 @@ void Face::generate_mapping(){
                                  b,
                                  bl
                              }});
-#if 0            
-            cm[f(i,j)] = Mapping
-            {
-                ur,
-                u,
-                ul,
-                r,
-                k,
-                l,
-                br,
-                b,
-                bl
-            };
-#endif
         }
     }
 }
@@ -225,6 +211,34 @@ Face(ei,1,1)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
+void Face::debug_print(std::string fn)
+{
+    /* 
+    We will print it top to bottom!!!
+     */
+    std::ofstream ofs;
+    ofs.open(fn, std::ios::trunc | std::ios::out);
+    if(ofs.is_open())
+    {
+        /* 
+        First goes width then height
+         */
+        ofs << "P3\n" << f.get_extent(1) << " " << f.get_extent(0) << "\n255\n";
+        
+        for(int i=f.get_extent(0)-1;i>=0;--i){
+            for(int j=0;j<f.get_extent(1);++j){
+                auto a=f(i,j);
+                Color<float> c = a->c[2];
+                int ir = int(255.99 * c.r);
+                int ig = int(255.99 * c.g);
+                int ib = int(255.99 * c.b);
+                ofs << std::to_string(ir) << " " << std::to_string(ig) << " " << std::to_string(ib) << std::endl;
+            }
+        }
+        ofs.close();
+    }
+    else std::cout << "Unable to open file:" << fn << std::endl;
+}
 
 void Face::add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b){
     ElemIndex ei=si;

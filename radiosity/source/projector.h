@@ -6,7 +6,6 @@
 class Projector{
     public:
     Projector()=default;
-    virtual void render() = 0;
 };
 
 #endif //PROJECTOR_H
