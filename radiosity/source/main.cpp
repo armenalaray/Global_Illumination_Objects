@@ -4,9 +4,8 @@ Radiosity Solver by Alejandro Armenta
  YOUAREHERE: 23.5.2.1 Reference Deduction 
 */
 
-#include "matrix.h"
 #include "space.h"
-#include "radiosity.h"
+#include "ortho_projector.h"
 
 #if defined(_MSC_VER)
 #define _CRTDBG_MAP_ALLOC
@@ -78,6 +77,6 @@ int main()
     c=mult_m(a,b);
     std::cout << c << std::endl;
 #endif
-    //OrthoProjector o{};
-    //o.render();
+    OrthoProjector o{};
+    o.render();
 }

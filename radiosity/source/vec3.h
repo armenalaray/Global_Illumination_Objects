@@ -21,6 +21,7 @@ class Vec3
     Vec3& operator+=(const Vec3&);
     Vec3& operator-=(const Vec3&);
     Vec3& operator*=(const float);
+    Vec3& operator/=(const float);
     
     T norm() const;
     T squared_norm() const;
@@ -66,6 +67,14 @@ Vec3<T>& Vec3<T>::operator*=(const float f){
     x*=f;
     y*=f;
     z*=f;
+    return *this;
+}
+
+template<typename T>
+Vec3<T>& Vec3<T>::operator/=(const float f){
+    x/=f;
+    y/=f;
+    z/=f;
     return *this;
 }
 

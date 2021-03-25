@@ -41,7 +41,7 @@ class Face{
     {
         cm.reserve(i*j);
     }
-    virtual void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b) = 0;
+    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b);
     protected:
     void generate_mapping();
     ElemIndex si;
@@ -53,37 +53,31 @@ class Face{
 
 class Face_xy_z0:public Face{
     public:
-    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b)override;
     Face_xy_z0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv);
 };
 
 class Face_yz_x0:public Face{
     public:
-    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b)override;
     Face_yz_x0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv);
 };
 
 class Face_xz_y0:public Face{
     public:
-    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b)override;
     Face_xz_y0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv);
 };
 
 class Face_yz_x5:public Face{
     public:
-    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b)override;
     Face_yz_x5(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv);
 };
 
 class Face_xz_y5:public Face{
     public:
-    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b)override;
     Face_xz_y5(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv);
 };
 
 class Face_emissor:public Face{
     public:
-    void add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b)override;
     Face_emissor(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv);
 };
 
