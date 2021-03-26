@@ -1,9 +1,20 @@
 #include "ortho_projector.h"
 
-/* 
-NO, we are not gonna request vertices to space interface, that doesn´t make sense
-instead i have to put them wherever i want!!!
+
+/*
+ OrthoProjector::render
+Description:
+Renders 5 faces of Cornell Box.
+
+Parameters: 
+float fw: Cornell Box's face width.
+ float fh: Cornell Box's face height.
+ int th: Image Height.
+ int tw: Image Width.
+
+Output: -
  */
+
 void OrthoProjector::render(float fw, float fh, int th, int tw)
 {
     float cg = 0.4f;

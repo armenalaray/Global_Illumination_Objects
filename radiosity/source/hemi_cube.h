@@ -1,5 +1,15 @@
 /* date = March 20th 2021 2:26 pm */
 
+/* 
+struct HemiCube
+ referenced by: struct Element_impl 
+ Computes Form Factor Calculation.
+
+References:
+COHEN, M.F., AND GREENBERG, D.P. The hemi-cube: A radiosity solution for complex environments. Computer Graphics(SIGGRAPH '85 proceedings) 19:3 (July 1985), pp. 31-40.
+*/
+
+
 #ifndef HEMI_CUBE_H
 #define HEMI_CUBE_H
 

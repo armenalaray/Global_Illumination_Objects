@@ -1,5 +1,12 @@
 /* date = March 16th 2021 3:30 pm */
 
+/* 
+class Canvas
+referenced by: ortho_projector.h
+referenced by: persp_projector.h
+Canvas object works as a space to write color data into a file.
+ */
+
 #ifndef CANVAS_H
 #define CANVAS_H
 
@@ -12,7 +19,6 @@
 class Canvas{
     public:
     Canvas(const Vec3<float>& X_, const Vec3<float>& Y_, const Vec3<float>& O_, const float fw, const float fh, const int th, const int tw, const float cg_ = 0.0f);
-    void set_base();
     void generate_ray();
     bool open_ppm_file(std::string);
     bool not_finished_writing();

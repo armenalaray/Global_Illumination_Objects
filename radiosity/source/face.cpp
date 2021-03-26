@@ -1,5 +1,24 @@
 #include "face.h"
 
+
+/* 
+ Mapping constructor
+Description:
+Constructs a Mapping Object that stores possible mappings for each Quad within Face.
+
+Parameters: 
+const Mapped_quad_ur& ur_: Mapped Quad Upper Right.
+const Mapped_quad_u& u_: Mapped Quad Upper.
+const Mapped_quad_ul& ul_: Mapped Quad Upper Left.
+const Mapped_quad_r& r_: Mapped Quad Right.
+const Mapped_quad_k& k_: Mapped Quad Center (this is the same Quad as referenced by itself).
+const Mapped_quad_l& l_: Mapped Quad Left.
+const Mapped_quad_br& br_: Mapped Quad Bottom Right.
+const Mapped_quad_b& b_: Mapped Quad Bottom.
+const Mapped_quad_bl& bl_: Mapped Quad Bottom Left.
+
+Output: -
+ */
 Mapping::Mapping(const Mapped_quad_ur& ur_,
                  const Mapped_quad_u& u_,
                  const Mapped_quad_ul& ul_,
@@ -20,6 +39,16 @@ b{b_},
 bl{bl_}
 {}
 
+
+/* 
+ void Face::generate_mapping()
+Description:
+Generates the corresponding Mapping object for each Quad.
+
+Parameters: 
+
+Output: -
+ */
 void Face::generate_mapping(){
     
     for(auto i=0; i<f.get_extent(0);++i){
@@ -81,9 +110,18 @@ void Face::generate_mapping(){
 }
 
 /* 
-Este esta bien!!
- */
+Face_xy_z0 Constructor
+Description:
+Constructs a Face_xy_z0 based upon parameters.
 
+Parameters: 
+float fw: Face Width.
+ int hps: Hitables Per Side.
+ ElemIndex& ei: Element Index.
+ std::vector<std::shared_ptr<Quad>>& qmv: Vector of Quad pointers.
+
+Output: -
+ */
 Face_xy_z0::Face_xy_z0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
@@ -103,10 +141,20 @@ Face(ei,hps,hps)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
-/* 
-Este esta bien!!
- */
 
+/* 
+ Face_yz_x0 Constructor
+Description:
+Constructs a Face_yz_x0 based upon parameters.
+
+Parameters: 
+float fw: Face Width.
+ int hps: Hitables Per Side.
+ ElemIndex& ei: Element Index.
+ std::vector<std::shared_ptr<Quad>>& qmv: Vector of Quad pointers.
+
+Output: -
+ */
 Face_yz_x0::Face_yz_x0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
@@ -126,10 +174,20 @@ Face(ei,hps,hps)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
-/* 
-Este esta bien!!
- */
 
+/* 
+ Face_xz_y0 Constructor
+Description:
+Constructs a Face_xz_y0 based upon parameters.
+
+Parameters: 
+float fw: Face Width.
+ int hps: Hitables Per Side.
+ ElemIndex& ei: Element Index.
+ std::vector<std::shared_ptr<Quad>>& qmv: Vector of Quad pointers.
+
+Output: -
+ */
 Face_xz_y0::Face_xz_y0(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
@@ -149,10 +207,20 @@ Face(ei,hps,hps)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
-/* 
-Este esta bien!!
- */
 
+/* 
+ Face_yz_x5 Constructor
+Description:
+Constructs a Face_yz_x5 based upon parameters.
+
+Parameters: 
+float fw: Face Width.
+ int hps: Hitables Per Side.
+ ElemIndex& ei: Element Index.
+ std::vector<std::shared_ptr<Quad>>& qmv: Vector of Quad pointers.
+
+Output: -
+ */
 Face_yz_x5::Face_yz_x5(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
@@ -172,10 +240,20 @@ Face(ei,hps,hps)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
-/* 
-Este esta bien!!
- */
 
+/* 
+ Face_xz_y5 Constructor
+Description:
+Constructs a Face_xz_y5 based upon parameters.
+
+Parameters: 
+float fw: Face Width.
+ int hps: Hitables Per Side.
+ ElemIndex& ei: Element Index.
+ std::vector<std::shared_ptr<Quad>>& qmv: Vector of Quad pointers.
+
+Output: -
+ */
 Face_xz_y5::Face_xz_y5(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,hps,hps)
 {
@@ -195,7 +273,19 @@ Face(ei,hps,hps)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
+/* 
+ Face_emissor Constructor
+Description:
+Constructs a Face_emissor based upon parameters.
 
+Parameters: 
+float fw: Face Width.
+ int hps: Hitables Per Side.
+ ElemIndex& ei: Element Index.
+ std::vector<std::shared_ptr<Quad>>& qmv: Vector of Quad pointers.
+
+Output: -
+ */
 Face_emissor::Face_emissor(float fw, int hps, ElemIndex& ei, std::vector<std::shared_ptr<Quad>>& qmv):
 Face(ei,1,1)
 {
@@ -211,6 +301,16 @@ Face(ei,1,1)
     for(auto i:cm)qmv.push_back(i.first);
 }
 
+/* 
+void Face::debug_print(std::string fn)
+Description:
+Prints first Vertex Color of each Quad within Face into PPM file.
+
+Parameters: 
+std::string fn: FileName.
+
+Output: -
+ */
 void Face::debug_print(std::string fn)
 {
     /* 
@@ -240,6 +340,18 @@ void Face::debug_print(std::string fn)
     else std::cout << "Unable to open file:" << fn << std::endl;
 }
 
+/* 
+void Face::add_radiosities
+Description:
+Adds radiosity results onto each Quad within Face. The reference starts with si as base.
+
+Parameters: 
+const Matrix<float,1>& r: Vector With radiosity results for red channel.
+const Matrix<float,1>& g: Vector With radiosity results for green channel.
+const Matrix<float,1>& b: Vector With radiosity results for blue channel.
+
+Output: -
+ */
 void Face::add_radiosities(const Matrix<float,1>& r,const Matrix<float,1>& g,const Matrix<float,1>& b){
     ElemIndex ei=si;
     for(auto a:cm){

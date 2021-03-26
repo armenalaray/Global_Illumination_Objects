@@ -1,5 +1,11 @@
 /* date = March 16th 2021 2:42 pm */
 
+/* 
+class OrthoProjector
+Inherits From: class Projector
+Perspective Projector - Orthogonal renderer.
+ */
+
 #ifndef ORTHO_PROJECTOR_H
 #define ORTHO_PROJECTOR_H
 

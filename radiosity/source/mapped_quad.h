@@ -1,5 +1,65 @@
 /* date = March 24th 2021 2:08 pm */
 
+/* 
+class Mapped_quad
+Derived classes: class Mapped_quad_ur,class Mapped_quad_u,class Mapped_quad_ul,class Mapped_quad_r,class Mapped_quad_k,class Mapped_quad_l,class Mapped_quad_br,class Mapped_quad_b,class Mapped_quad_bl
+ Abstract Base class that stores pointer to Quad.
+*/
+
+/* 
+class Mapped_quad_ur
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_u
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_ul
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_r
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_k
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_l
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_br
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_b
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
+/* 
+class Mapped_quad_bl
+referenced by: struct Mapping
+ Derived class that overrides add_color function to match respective Vertex Colors.
+*/
+
 #ifndef MAPPED_QUAD_H
 #define MAPPED_QUAD_H
 

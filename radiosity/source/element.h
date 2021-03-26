@@ -1,5 +1,28 @@
 /* date = March 20th 2021 2:51 pm */
 
+/* 
+ Basic Description of the Finite Element Method: NOTE(for a thorough explanation see README).
+
+Model Environment ->
+Cast Problem into Finite Space ->
+-Mesh Surfaces
+-Select Basis Functions
+-Select Error Metric
+
+Determine Form Factors ->
+Solve Linear System of Equations ->
+Reconstruct Solution ->
+Display Result from Given Eye Point
+
+M.F. Cohen and J. R. Wallace. Radiosity and Realistic Image Synthesis. Boston, MA: Academic Press Professional, 1993.
+*/
+
+
+/* 
+class Element
+ 
+*/
+
 #ifndef ELEMENT_H
 #define ELEMENT_H
 

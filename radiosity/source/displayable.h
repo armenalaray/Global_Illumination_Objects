@@ -1,5 +1,11 @@
 /* date = March 16th 2021 4:30 pm */
 
+/* 
+class Displayable
+Derived Classes: class Space
+Abstract class to represent displayable objects, works as interface to Radiosity back-end.
+ */
+
 #ifndef DISPLAYABLE_H
 #define DISPLAYABLE_H
 

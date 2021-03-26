@@ -1,5 +1,6 @@
 #include "element.h"
 
+
 Element_impl::Element_impl(const Vec3<float>& n, const Vec3<float>& p):
 u{},
 v{},
@@ -26,7 +27,6 @@ hm{100,100}
     corners[static_cast<int>(corner_it::bf)] = p + -1.0f*u + -1.0f*w;
 }
 
-// TODO(Alex): Implement other constructors and assignment operators?
 Element_ref& Element_ref::operator=(const Element& e){
     n = e.get_n();
     p = e.get_p();

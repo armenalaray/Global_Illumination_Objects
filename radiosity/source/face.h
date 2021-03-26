@@ -1,5 +1,54 @@
 /* date = March 24th 2021 11:43 am */
 
+
+/* 
+class Face
+Derived Classes: class Face_xy_z0,class Face_yz_x0,Face_xz_y0,Face_yz_x5,Face_xz_y5,Face_emissor
+Base class where common Face operations are defined.
+ */
+
+/* 
+struct Mapping
+referenced by: class Face
+Structure of possible Mappings for each quad.
+ */
+
+/* 
+class Face_xy_z0
+referenced by: class Quad_manager
+Derived object that represents a Face axis-aligned to XY plane with z=0
+ */
+
+/* 
+class Face_yz_x0
+referenced by: class Quad_manager
+Derived object that represents a Face axis-aligned to YZ plane with x=0
+ */
+
+/* 
+class Face_xz_y0
+referenced by: class Quad_manager
+Derived object that represents a Face axis-aligned to XZ plane with y=0
+ */
+
+/* 
+class Face_yz_x5
+referenced by: class Quad_manager
+Derived object that represents a Face axis-aligned to YZ plane with x=5
+ */
+
+/* 
+class Face_xz_y5
+referenced by: class Quad_manager
+Derived object that represents a Face axis-aligned to XZ plane with y=5
+ */
+
+/* 
+class Face_emissor
+referenced by: class Quad_manager
+Derived object that represents a Face axis-aligned to XZ plane with y=4.99999999
+ */
+
 #ifndef FACE_H
 #define FACE_H
 

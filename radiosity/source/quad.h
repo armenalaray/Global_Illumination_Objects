@@ -1,5 +1,23 @@
 /* date = March 16th 2021 2:53 pm */
 
+/* 
+class Quad
+Inherits From: class hitable, class Element
+Derived Classes: class Quad_XY_Z0, class Quad_YZ_X0, class Quad_XZ_Y0, class Quad_YZ_X5, class Quad_XZ_Y5
+Base Class that represents the interface for each Quad, it has to inherit Element properties and hitable properties.
+ */
+
+/* 
+struct HitRec
+ Basic Structure to return data from hit procedure.
+*/
+
+/* 
+class hitable
+Derived Classes: class Quad
+Represents interface for hitable objects.
+*/
+
 #ifndef QUAD_H
 #define QUAD_H
 

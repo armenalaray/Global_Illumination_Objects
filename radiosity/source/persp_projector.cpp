@@ -1,5 +1,19 @@
 #include "persp_projector.h"
 
+/*
+ PerspectiveProjector::render
+Description:
+Renders Cornell Box from the front face.
+
+Parameters: 
+float rfw: Cornell Box Width.
+ float rfh: Cornell Box Height.
+ int th: Image Height.
+ int tw: Image Width.
+
+Output: -
+ */
+
 void PerspectiveProjector::render(float rfw, float rfh, int th, int tw){
     
 #if 0    

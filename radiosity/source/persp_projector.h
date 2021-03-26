@@ -1,5 +1,11 @@
 /* date = March 20th 2021 2:29 pm */
 
+/* 
+class PerspectiveProjector
+Inherits From: class Projector
+Perspective Projector - Perspective renderer.
+ */
+
 #ifndef PERSP_PROJECTOR_H
 #define PERSP_PROJECTOR_H
 
