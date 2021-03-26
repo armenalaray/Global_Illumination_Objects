@@ -6,6 +6,7 @@ Radiosity Solver by Alejandro Armenta
 
 #include "space.h"
 #include "ortho_projector.h"
+#include "persp_projector.h"
 
 #if defined(_MSC_VER)
 #define _CRTDBG_MAP_ALLOC
@@ -15,8 +16,8 @@ Radiosity Solver by Alejandro Armenta
 // allocations to be of _CLIENT_BLOCK type
 #endif
 
-float fw=5.0f;
-int hps=5;
+float fw=10.0f;
+int hps=10;
 
 Space space{fw,hps};
 
@@ -81,5 +82,7 @@ int main()
     std::cout << c << std::endl;
 #endif
     OrthoProjector o{};
-    o.render(fw,fw,128,128);
+    o.render(fw,fw,1024,1024);
+    PerspectiveProjector p{};
+    p.render(fw,fw,1024,1024);
 }
