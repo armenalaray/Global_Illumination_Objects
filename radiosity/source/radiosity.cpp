@@ -1,22 +1,17 @@
 #include "radiosity.h"
 
 /* 
-Canvas constructor
+Radiosity Constructor
 Description:
-Constructs a Canvas object, operations to write to PPM file.
+The radiosity solver contains three stimuli objects, 
+each of them solves a system o linear equations with Form Factor 
+previously calculated by Element Objects.
 
 Parameters: 
-const Vec3<float>& X_: Width Axis.
-const Vec3<float>& Y_: Height Axis.
-const Vec3<float>& O_: Canvas position in World-Space.
-const float fw_: Canvas Face Width in (World-Space size).
- const float fh_: Canvas Face Height in (World-Space size).
- const int th: Output image pixel height.
- const int tw: Output image pixel width.
- const float cg_: Padding in canvas, it forms a uniform padding around canvas, this is to protect ortho projectors from casting rays onto elements parallel to ray.
+float fw: Face Size Width.
+ int hps: Hitables Per Face Side.
 
 Output: -
-
  */
 Radiosity::Radiosity(float fw, int hps):
 qm{fw,hps},

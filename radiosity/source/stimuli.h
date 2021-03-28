@@ -6,6 +6,13 @@
 #include <string>
 #include "matrix.h"
 
+
+/* 
+class Stimuli
+referenced by: class Radiosity
+Solver for K B = E 
+ */
+
 class Stimuli{
     public:
     Stimuli(int fc, float fw, int hps, const Matrix<float,2>& f, float e_s, float f0_s, float f1_s, float f2_s, float f3_s, float f4_s);

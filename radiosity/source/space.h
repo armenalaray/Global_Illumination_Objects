@@ -4,9 +4,15 @@
 #define SPACE_H
 
 /* 
-Esta es mi interface, puede preguntar a sus quds si son colisionados por el ray y si si, les pregunta
-el color por medio de los uv
- */
+class Space
+referenced by: main.cpp
+ Inherits From: class Displayable
+
+The Space Object is the interface to the radiosity solver, it inherits from Displayable interface, which dispatches 
+Rendering requests from multiple rendering systems. 
+e.g. I have two Rendering systems in main.cpp that can request color data to space using request_color function.
+PerspectiveProjector and OrthoProjector.
+*/
 
 #include <vector>
 #include <memory>

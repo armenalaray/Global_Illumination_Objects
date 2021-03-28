@@ -4,6 +4,8 @@
 class PerspectiveProjector
 Inherits From: class Projector
 Perspective Projector - Perspective renderer.
+NOTE: This is a simple Rendering system just to showcase the Radiosity design to 
+support multiple rendering systems.
  */
 
 #ifndef PERSP_PROJECTOR_H

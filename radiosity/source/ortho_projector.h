@@ -4,6 +4,8 @@
 class OrthoProjector
 Inherits From: class Projector
 Perspective Projector - Orthogonal renderer.
+NOTE: This is a simple Rendering system just to showcase the Radiosity design to 
+support multiple rendering systems.
  */
 
 #ifndef ORTHO_PROJECTOR_H
