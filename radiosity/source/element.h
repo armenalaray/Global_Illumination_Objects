@@ -20,8 +20,22 @@ M.F. Cohen and J. R. Wallace. Radiosity and Realistic Image Synthesis. Boston, M
 
 /* 
 class Element
- 
-*/
+Derived Classes: class Quad
+Element interface, stores basic info for meshing as element normal and element world position
+ */
+
+
+/* 
+class Element_impl
+ referenced by: class Element
+Element implementation, stores all data necessary to calculate form-factors.
+ */
+
+
+/* 
+class Element_ref
+Stores an element reference, do not copies implementation.
+ */
 
 #ifndef ELEMENT_H
 #define ELEMENT_H

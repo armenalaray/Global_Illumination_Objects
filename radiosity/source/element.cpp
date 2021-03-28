@@ -1,6 +1,15 @@
 #include "element.h"
 
+/* 
+Element_impl constructor
+Description:
 
+Parameters: 
+const Vec3<float>& n: Element's normal.
+ const Vec3<float>& p: Element's position in world space coordinates.
+
+Output: -
+ */
 Element_impl::Element_impl(const Vec3<float>& n, const Vec3<float>& p):
 u{},
 v{},
@@ -27,6 +36,17 @@ hm{100,100}
     corners[static_cast<int>(corner_it::bf)] = p + -1.0f*u + -1.0f*w;
 }
 
+/* 
+Copy Assignment operator for element_ref 
+Description:
+Copies basic info from element class - DO NOT copies element implementation!!!
+
+Parameters: 
+const Element& e: Element reference to copy from.
+
+Output:
+reference to Element_ref object.
+ */
 Element_ref& Element_ref::operator=(const Element& e){
     n = e.get_n();
     p = e.get_p();
@@ -34,6 +54,18 @@ Element_ref& Element_ref::operator=(const Element& e){
     return *this;
 }
 
+/* 
+Element Constructor.
+Description:
+Constructs element based on parameters.
+
+Parameters: 
+const Vec3<float>& n_: Element's normal. 
+const Vec3<float>& p_: Element's position in world coordinates.
+const ElemIndex i_: Unique element ID.
+
+Output: -
+ */
 Element::Element(const Vec3<float>& n_, const Vec3<float>& p_, const ElemIndex i_):
 n{n_},
 p{p_},
@@ -42,6 +74,20 @@ impl{n,p}
 {
 }
 
+
+/* 
+bool Element::get_ray(Ray& r)
+Description:
+Generates a ray pointing from Elements position onto HemiCubes pixel with coordinates 
+(hm.x, hm.y).
+
+This algorithm iterates through all faces of HemiCube.
+
+Parameters: 
+Ray& r: Ray to be returned.
+
+Output: -
+ */
 bool Element::get_ray(Ray& r){
     if(impl.corner_i>=5) return false;
     switch(impl.corner_i)
@@ -116,6 +162,18 @@ bool Element::get_ray(Ray& r){
 }
 
 
+/* 
+void Element::calc_ff(const Ray& ray, const Element_ref& j, Matrix<float,2>& ffm)
+Description:
+Calculates form-factor between two elements.
+
+Parameters: 
+const Ray& ray: Ray that hit element j.
+ const Element_ref& j: Jth element hitted.
+ Matrix<float,2>& ffm: Form-Factor matrix to be filled in.
+
+Output: -
+ */
 void Element::calc_ff(const Ray& ray, const Element_ref& j, Matrix<float,2>& ffm){
     float r = ray.get_direction().squared_norm();
     Vec3<float> ij = MakeUnitVector(ray.get_direction());

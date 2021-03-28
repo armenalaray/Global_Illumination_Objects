@@ -1,5 +1,12 @@
 /* date = March 20th 2021 4:49 pm */
 
+/* 
+class Radiosity
+referenced by: class Space
+ Radiosity Solver
+*/
+
+
 #ifndef RADIOSITY_H
 #define RADIOSITY_H
 

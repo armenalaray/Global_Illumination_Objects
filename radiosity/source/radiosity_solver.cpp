@@ -1,1 +1,0 @@
-#include "radiosity_solver.h"
